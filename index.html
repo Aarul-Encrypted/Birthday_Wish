@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Wish 🎂</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #5b21b6, transparent 40%),
+        linear-gradient(135deg, #09001a, #16002d, #000);
+    color: white;
+    overflow-x: hidden;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.card {
+    width: 100%;
+    max-width: 520px;
+    padding: 35px 25px;
+    border-radius: 30px;
+    text-align: center;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+}
+
+h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #ddd;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    outline: none;
+    background: white;
+    color: #222;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 16px;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(90deg, #ff1493, #8a2be2);
+    box-shadow: 0 10px 30px rgba(255,20,147,0.35);
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.03);
+}
+
+#birthday {
+    display: none;
+}
+
+.birthday-title {
+    font-size: 45px;
+    color: #ffd700;
+    text-shadow: 0 0 20px #ff69b4;
+    animation: glow 1.5s infinite alternate;
+}
+
+.name {
+    font-size: 52px;
+    margin: 15px 0;
+    background: linear-gradient(90deg,#ff69b4,#ffd700,#00ffff);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+}
+
+.message {
+    font-size: 19px;
+    line-height: 1.6;
+    color: #eee;
+    margin: 20px 0;
+}
+
+.cake {
+    font-size: 90px;
+    animation: bounce 1.5s infinite;
+}
+
+.back {
+    background: rgba(255,255,255,0.15);
+    margin-top: 10px;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff69b4; }
+    to { text-shadow: 0 0 35px #ffd700; }
+}
+
+@keyframes bounce {
+    50% { transform: translateY(-15px); }
+}
+
+.balloon {
+    position: fixed;
+    bottom: -100px;
+    font-size: 45px;
+    animation: fly 6s linear infinite;
+    z-index: -1;
+}
+
+@keyframes fly {
+    from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-120vh) rotate(30deg);
+        opacity: 0;
+    }
+}
+
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 10px;
+    height: 15px;
+    animation: fall 4s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+    }
+}
+
+.small {
+    color: #bbb;
+    font-size: 13px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+<button id="musicButton" onclick="toggleMusic()"
+style="position:fixed;top:18px;right:18px;z-index:9999;padding:10px 16px;border:none;border-radius:30px;background:rgba(255,255,255,.2);color:white;font-size:15px;cursor:pointer;">
+🎵 Music
+</button>
+<div class="container">
+
+    <!-- FORM -->
+    <div class="card" id="form">
+
+        <div style="font-size:70px;">🎂</div>
+
+        <h1>Birthday Wish ✨</h1>
+
+        <p class="subtitle">
+            This is the day the Lord has made; let us rejoice and be glad in it. ✨
+<br>
+— Psalm 118:24
+        </p>
+
+        <label>👤 Enter Name</label>
+        <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter birthday person's name"
+        >
+
+        <label>🎂 Birth Date</label>
+        <input
+            type="date"
+            id="dateInput"
+        >
+
+       <button onclick="createWish(); playBirthdayMusic()">
+    🎁 Create Birthday Wish
+</button>
+
+        <p class="small">
+            Made with ❤️ for a special person
+        </p>
+
+    </div>
+
+    <!-- BIRTHDAY SCREEN -->
+    <div class="card" id="birthday">
+
+        <div class="cake">🎂</div>
+
+        <div class="birthday-title">
+            HAPPY BIRTHDAY
+        </div>
+
+        <div class="name" id="showName"></div>
+
+        <p class="message">
+  ✨ This is the day the Lord has made; let us rejoice and be glad in it. ✨
+  <br><br>
+  — Psalm 118:24 ❤️
+</p>
+        <div style="font-size:45px;">
+            🎈 🎁 🥳 🎊
+        </div>
+
+        <button class="back" onclick="goBack()">
+            ← Create Another Wish
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function createWish() {
+
+    const name = document.getElementById("nameInput").value.trim();
+    const birthDate = document.getElementById("dateInput").value;
+
+    if (name === "") {
+        alert("Please enter the name ❤️");
+        return;
+    }
+
+    if (birthDate === "") {
+        alert("Please select the birth date 🎂");
+        return;
+    }
+
+    document.getElementById("showName").innerText = name;
+
+    document.getElementById("form").style.display = "none";
+    document.getElementById("birthday").style.display = "block";
+
+    createBalloons();
+    createConfetti();
+}
+
+function goBack() {
+
+    document.getElementById("birthday").style.display = "none";
+    document.getElementById("form").style.display = "block";
+
+}
+
+function createBalloons() {
+
+    const balloons = ["🎈","🎈","🎈","🎈","🎈"];
+
+    balloons.forEach((balloon, index) => {
+
+        const el = document.createElement("div");
+
+        el.className = "balloon";
+        el.innerText = balloon;
+
+        el.style.left = (10 + index * 20) + "%";
+        el.style.animationDelay = (index * 0.8) + "s";
+
+        document.body.appendChild(el);
+
+        setTimeout(() => {
+            el.remove();
+        }, 7000);
+    });
+}
+
+function createConfetti() {
+
+    for (let i = 0; i < 100; i++) {
+
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.style.left = Math.random() * 100 + "vw";
+
+        piece.style.background =
+            ["#ff1493","#ffd700","#00ffff","#7fff00","#ff4500"]
+            [Math.floor(Math.random() * 5)];
+
+        piece.style.animationDelay =
+            Math.random() * 2 + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+            piece.remove();
+        }, 6000);
+    }
+}
+const birthdayMusic = new Audio("birthday.mp3");
+birthdayMusic.loop = true;
+birthdayMusic.volume = 0.6;
+
+function playBirthdayMusic() {
+    birthdayMusic.play();
+}
+
+function stopBirthdayMusic() {
+    birthdayMusic.pause();
+    birthdayMusic.currentTime = 0;
+}
+
+function toggleMusic() {
+    if (birthdayMusic.paused) {
+        birthdayMusic.play();
+    } else {
+        birthdayMusic.pause();
+    }
+}
+</script>
+
+</body>
+</html>
